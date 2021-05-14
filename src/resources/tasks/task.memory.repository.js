@@ -24,4 +24,22 @@ const deleteTaskById = async (id) => {
   const index = allTasks.findIndex(task => task.id === id);
   return allTasks.splice(index, 1);
 }
-module.exports = { getAll, save, getById, update, deleteTaskById};
+
+const deleteTaskByBordId = async (boardId) => {
+  const needTasks = allTasks.filter(task => task.boardId === boardId);
+  needTasks.forEach(delTask => {
+    const index = allTasks.findIndex(task => task.id === delTask.id);
+    allTasks.splice(index, 1);
+  });
+}
+
+const anonymizeAssignee = async (userId) => {
+  allTasks.map(task => {
+    if(task.userId === userId){
+      const newTask = Object.assign(task, {userId:null});
+      return newTask
+    }
+    return task;
+  });
+}
+module.exports = { getAll, save, getById, update, deleteTaskById, deleteTaskByBordId, anonymizeAssignee};

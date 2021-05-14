@@ -1,4 +1,5 @@
 const Board = require('./board.model');
+const tasksService = require('../tasks/task.service');
 
 const allBoards = [];
 const getAll = async () => allBoards;
@@ -19,6 +20,10 @@ const update = async (id, title, columns) => {
 
 const deleteBoard = async (id) => {
   const index = allBoards.findIndex(board => board.id === id);
-  return allBoards.splice(index, 1);
+  const result = allBoards.splice(index, 1);
+  if(result) {
+    await tasksService.deleteTaskByBordId(id);
+  }
+  return result;
 }
 module.exports = { getAll, save, getById, update, deleteBoard};

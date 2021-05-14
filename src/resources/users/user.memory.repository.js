@@ -1,4 +1,5 @@
 const User = require('./user.model');
+const tasksService = require('../tasks/task.service');
 
 const allUsers = [];
 const getAll = async () => allUsers;
@@ -20,6 +21,10 @@ const update = async (id, name, login, password) => {
 
 const deleteUser = async (id) => {
   const index = allUsers.findIndex(user => user.id === id);
-  return allUsers.splice(index, 1);
+  const result = allUsers.splice(index, 1);
+  if(result){
+    await tasksService.anonymizeAssignee(id);
+  }
+  return result;
 }
 module.exports = { getAll, getById, save, update, deleteUser };
