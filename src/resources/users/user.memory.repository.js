@@ -20,6 +20,6 @@ const update = async (id, name, login, password) => {
 
 const deleteUser = async (id) => {
   const index = allUsers.findIndex(user => user.id === id);
-  allUsers.splice(index, 1);
+  return allUsers.splice(index, 1);
 }
 module.exports = { getAll, getById, save, update, deleteUser };
