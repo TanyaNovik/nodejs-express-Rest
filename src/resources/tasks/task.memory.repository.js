@@ -1,6 +1,6 @@
 const Task = require('./task.model');
 
-const allTasks = [];
+let allTasks = [];
 const getAll = async () => allTasks;
 const getById = async (id) => allTasks.find(board => board.id === id);
 
@@ -26,11 +26,7 @@ const deleteTaskById = async (id) => {
 }
 
 const deleteTaskByBordId = async (boardId) => {
-  const needTasks = allTasks.filter(task => task.boardId === boardId);
-  needTasks.forEach(delTask => {
-    const index = allTasks.findIndex(task => task.id === delTask.id);
-    allTasks.splice(index, 1);
-  });
+  allTasks = allTasks.filter(task => task.boardId !== boardId);
 }
 
 const anonymizeAssignee = async (userId) => {
