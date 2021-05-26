@@ -1,37 +1,34 @@
 const router = require('express').Router();
-const User = require('./user.model');
-const usersService = require('./user.service');
+const boardsService = require('./board.service');
 
 router.route('/').get(async (req, res) => {
   try {
-    const users = await usersService.getAll();
-    res.status(200).json(users.map(User.toResponse));
+    const boards = await boardsService.getAll();
+    res.status(200).json(boards);
   } catch {
     res.status(401).json('Access token is missing or invalid');
   }
-
 });
 
 router.route('/:id').get(async (req, res) => {
   try {
-    const user = await usersService.getUser(req.params.id);
-    if (user) {
-      res.status(200).json(User.toResponse(user));
+    const board = await boardsService.getBoard(req.params.id);
+    if (board) {
+      res.status(200).json(board);
     } else {
-      res.status(404).json('User not found');
+      res.status(404).json('Board not found');
     }
   } catch {
     res.status(401).json('Access token is missing or invalid');
   }
-
 });
 
 router.route('/').post(async (req, res) => {
   try {
-    const { name, login, password } = req.body;
-    const user = await usersService.save(name, login, password);
-    if (user) {
-      res.status(201).json(User.toResponse(user));
+    const { title, columns } = req.body;
+    const board = await boardsService.save(title, columns);
+    if (board) {
+      res.status(201).json(board);
     } else {
       res.status(400).json('Bad request');
     }
@@ -42,32 +39,29 @@ router.route('/').post(async (req, res) => {
 
 router.route('/:id').put(async (req, res) => {
   try {
-    const { name, login, password } = req.body;
-    const user = await usersService.update(req.params.id, name, login, password);
-    if (user) {
-      res.status(200).json(User.toResponse(user));
+    const { title, columns } = req.body;
+    const board = await boardsService.update(req.params.id, title, columns);
+    if (board) {
+      res.status(200).json(board);
     } else {
       res.status(400).json('Bad request');
     }
   } catch {
     res.status(401).json('Access token is missing or invalid');
   }
-
 });
 
 router.route('/:id').delete(async (req, res) => {
   try {
-    const result = await usersService.deleteUser(req.params.id);
+    const result = await boardsService.deleteBoard(req.params.id);
     if (result) {
-      res.status(204).json('The user has been deleted');
+      res.status(204).json('The board has been deleted');
     } else {
-      res.status(404).json('User not found');
+      res.status(404).json('Board not found');
     }
   } catch {
     res.status(401).json('Access token is missing or invalid');
   }
-
-
 });
 
 module.exports = router;
