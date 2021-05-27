@@ -7,7 +7,7 @@ const getAll = () => usersRepo.getAll();
 /**
  * Return found user by id
  * @param {string} id user id
- * @returns {User|undefined} found user or undefined if user is not found
+ * @returns {User|null} found user or null if user is not found
  */
 const getUser = (id) => usersRepo.getById(id);
 /**
@@ -24,7 +24,7 @@ const save = (name, login, password) => usersRepo.save(name, login, password);
  * @param {string} name user name
  * @param {string} login user login
  * @param {string} password user password
- * @returns {User|undefined} saved user or undefined if user is not found
+ * @returns {User|null} saved user or null if user is not found
  */
 const update = (id, name, login, password) => usersRepo.update(id, name, login, password);
 /**

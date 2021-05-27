@@ -9,9 +9,9 @@ const getAll = () => allTasks;
 /**
  * Return found task by id
  * @param {string} id task id
- * @returns {Task|undefined} found task or undefined if task is not found
+ * @returns {Task|null} found task or null if task is not found
  */
-const getById = (id) => allTasks.find(board => board.id === id);
+const getById = (id) => allTasks.find(board => board.id === id) ?? null;
 /**
  * Save task and return it
  * @param {string} title task title

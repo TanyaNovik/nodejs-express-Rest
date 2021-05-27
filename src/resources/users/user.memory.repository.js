@@ -10,9 +10,9 @@ const getAll = () => allUsers;
 /**
  * Return found user by id
  * @param {string} id user id
- * @returns {User|undefined} found user or undefined if user is not found
+ * @returns {User|null} found user or null if user is not found
  */
-const getById = (id) => allUsers.find(user => user.id === id);
+const getById = (id) => allUsers.find(user => user.id === id) ?? null;
 /**
  * Save user and return it
  * @param {string} name user name
@@ -31,7 +31,7 @@ const save = (name, login, password) => {
  * @param {string} name user name
  * @param {string} login user login
  * @param {string} password user password
- * @returns {User|undefined} saved user or undefined if user is not found
+ * @returns {User|null} saved user or null if user is not found
  */
 const update = (id, name, login, password) => {
   const needUser = allUsers.find(user => user.id === id);
@@ -39,8 +39,9 @@ const update = (id, name, login, password) => {
     needUser.name = name;
     needUser.login = login;
     needUser.password = password;
+    return needUser
   }
-  return needUser;
+  return null;
 }
 /**
  * Delete user

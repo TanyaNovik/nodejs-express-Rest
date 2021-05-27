@@ -10,9 +10,9 @@ const getAll = () => allBoards;
 /**
  * Return found board by id
  * @param {string} id need board id
- * @returns {Board|undefined} found board or undefined if board is not found
+ * @returns {Board|null} found board or null if board is not found
  */
-const getById = (id) => allBoards.find(board => board.id === id);
+const getById = (id) => allBoards.find(board => board.id === id) ?? null;
 /**
  * Save board and return it
  * @param {string} title board title
@@ -29,15 +29,16 @@ const save = (title, columns) => {
  * @param {string} id board id
  * @param {string} title new board title
  * @param {Column[]} columns new board columns
- * @returns {Board|undefined} updated board or undefined if board is not found
+ * @returns {Board|null} updated board or null if board is not found
  */
 const update = (id, title, columns) => {
   const needBoard = allBoards.find(board => board.id === id);
   if(needBoard){
     needBoard.title = title;
     needBoard.columns = columns;
+    return needBoard;
   }
-  return needBoard;
+  return null;
 }
 /**
  * Delete board

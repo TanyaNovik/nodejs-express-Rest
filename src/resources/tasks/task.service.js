@@ -8,7 +8,7 @@ const getAll = () => tasksRepo.getAll();
 /**
  * Return found task by id
  * @param {string} id task id
- * @returns {Task|undefined} found task or undefined if task is not found
+ * @returns {Task|null} found task or null if task is not found
  */
 const getTask = (id) => tasksRepo.getById(id);
 /**

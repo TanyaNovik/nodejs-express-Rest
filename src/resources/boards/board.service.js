@@ -7,7 +7,7 @@ const getAll = () => boardsRepo.getAll();
 /**
  * Return found board by id
  * @param {string} id need board id
- * @returns {Board|undefined} found board or undefined if board is not found
+ * @returns {Board|null} found board or null if board is not found
  */
 const getBoard = (id) => boardsRepo.getById(id);
 /**
@@ -22,7 +22,7 @@ const save = (title, columns) => boardsRepo.save(title, columns);
  * @param {string} id board id
  * @param {string} title new board title
  * @param {Column[]} columns new board columns
- * @returns {Board|undefined} updated board or undefined if board is not found
+ * @returns {Board|null} updated board or null if board is not found
  */
 const update = (id, title, columns) => boardsRepo.update(id, title, columns);
 /**
