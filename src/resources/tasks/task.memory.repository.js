@@ -3,15 +3,15 @@ const Task = require('./task.model');
 let allTasks = [];
 /**
  * Return all tasks
- * @returns {Promise<Task[]>} all tasks
+ * @returns {Task[]} all tasks
  */
-const getAll = async () => allTasks;
+const getAll = () => allTasks;
 /**
  * Return found task by id
  * @param {string} id task id
- * @returns {Promise<Task>} found task
+ * @returns {Task|undefined} found task or undefined if task is not found
  */
-const getById = async (id) => allTasks.find(board => board.id === id);
+const getById = (id) => allTasks.find(board => board.id === id);
 /**
  * Save task and return it
  * @param {string} title task title
@@ -20,9 +20,9 @@ const getById = async (id) => allTasks.find(board => board.id === id);
  * @param {string} userId id of task owner
  * @param {string} boardId id of bord where task is
  * @param {string} columnId id of column where task is
- * @returns {Promise<Task>} added task
+ * @returns {Task} added task
  */
-const save = async (title, order, description, userId, boardId, columnId) => {
+const save = (title, order, description, userId, boardId, columnId) => {
   const newTask = new Task({title, order, description, userId, boardId, columnId});
   allTasks.push(newTask);
   return newTask;
@@ -36,9 +36,9 @@ const save = async (title, order, description, userId, boardId, columnId) => {
  * @param {string} userId id of task owner
  * @param {string} boardId id of bord where task is
  * @param {string} columnId id of column where task is
- * @returns {Promise<null|Task>} saved task or null
+ * @returns {null|Task>} saved task or null
  */
-const update = async (id, title, order, description, userId, boardId, columnId) => {
+const update = (id, title, order, description, userId, boardId, columnId) => {
   const needIndex = allTasks.findIndex(task => task.id === id);
   if(needIndex) {
     const newTask = new Task({id, title, order, description, userId, boardId, columnId});
@@ -50,26 +50,24 @@ const update = async (id, title, order, description, userId, boardId, columnId) 
 /**
  * Delete task
  * @param {string} id task id
- * @returns {Promise<Task[]>} deleted task
+ * @returns {Task[]} deleted task
  */
-const deleteTaskById = async (id) => {
+const deleteTaskById = (id) => {
   const index = allTasks.findIndex(task => task.id === id);
   return allTasks.splice(index, 1);
 }
 /**
  * Delete task by board id
  * @param {string} boardId board id
- * @returns {Promise<void>}
  */
-const deleteTaskByBordId = async (boardId) => {
+const deleteTaskByBordId = (boardId) => {
   allTasks = allTasks.filter(task => task.boardId !== boardId);
 }
 /**
  * Search tasks where owner id = userId and set userId for that task null
  * @param {string} userId user id
- * @returns {Promise<void>}
  */
-const anonymizeAssignee = async (userId) => {
+const anonymizeAssignee = (userId) => {
   allTasks.map(task => {
     if(task.userId === userId){
       const newTask = Object.assign(task, {userId:null});

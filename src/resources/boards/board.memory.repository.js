@@ -4,22 +4,22 @@ const tasksService = require('../tasks/task.service');
 const allBoards = [];
 /**
  * Return all boards
- * @returns {Promise<Board[]>} all boards
+ * @returns {Board[]} all boards
  */
-const getAll = async () => allBoards;
+const getAll = () => allBoards;
 /**
  * Return found board by id
  * @param {string} id need board id
- * @returns {Promise<Board>} found board
+ * @returns {Board|undefined} found board or undefined if board is not found
  */
-const getById = async (id) => allBoards.find(board => board.id === id);
+const getById = (id) => allBoards.find(board => board.id === id);
 /**
  * Save board and return it
  * @param {string} title board title
  * @param {Column[]} columns board columns
- * @returns {Promise<Board>} new saved board
+ * @returns {Board} new saved board
  */
-const save = async (title, columns) => {
+const save = (title, columns) => {
   const newBoard = new Board({title, columns});
   allBoards.push(newBoard);
   return newBoard;
@@ -29,24 +29,26 @@ const save = async (title, columns) => {
  * @param {string} id board id
  * @param {string} title new board title
  * @param {Column[]} columns new board columns
- * @returns {Promise<Board>} updated board
+ * @returns {Board|undefined} updated board or undefined if board is not found
  */
-const update = async (id, title, columns) => {
+const update = (id, title, columns) => {
   const needBoard = allBoards.find(board => board.id === id);
-  needBoard.title = title;
-  needBoard.columns = columns;
+  if(needBoard){
+    needBoard.title = title;
+    needBoard.columns = columns;
+  }
   return needBoard;
 }
 /**
  * Delete board
  * @param {string} id board id
- * @returns {Promise<boolean>} true or false
+ * @returns {boolean} true or false
  */
-const deleteBoard = async (id) => {
+const deleteBoard = (id) => {
   const index = allBoards.findIndex(board => board.id === id);
   const result = allBoards.splice(index, 1);
   if(result) {
-    await tasksService.deleteTaskByBordId(id);
+    tasksService.deleteTaskByBordId(id);
     return true;
   }
   return false;

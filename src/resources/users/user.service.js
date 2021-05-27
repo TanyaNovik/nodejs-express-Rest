@@ -1,13 +1,13 @@
 const usersRepo = require('./user.memory.repository');
 /**
  * Return all users
- * @returns {Promise<User[]>} all users
+ * @returns {User[]} all users
  */
 const getAll = () => usersRepo.getAll();
 /**
  * Return found user by id
  * @param {string} id user id
- * @returns {Promise<User>} found user
+ * @returns {User|undefined} found user or undefined if user is not found
  */
 const getUser = (id) => usersRepo.getById(id);
 /**
@@ -15,7 +15,7 @@ const getUser = (id) => usersRepo.getById(id);
  * @param {string} name user name
  * @param {string} login user login
  * @param {string} password user password
- * @returns {Promise<User>} added user
+ * @returns {User} added user
  */
 const save = (name, login, password) => usersRepo.save(name, login, password);
 /**
@@ -24,13 +24,13 @@ const save = (name, login, password) => usersRepo.save(name, login, password);
  * @param {string} name user name
  * @param {string} login user login
  * @param {string} password user password
- * @returns {Promise<User>} saved user
+ * @returns {User|undefined} saved user or undefined if user is not found
  */
 const update = (id, name, login, password) => usersRepo.update(id, name, login, password);
 /**
  * Delete user
  * @param {string} id user id
- * @returns {Promise<boolean>} true or false
+ * @returns {boolean} true or false
  */
 const deleteUser = (id) => usersRepo.deleteUser(id);
 
