@@ -26,7 +26,7 @@ const save = (title:string, columns:Column[]) => boardsRepo.save(title, columns)
  * @param {Column[]} columns new board columns
  * @returns {Board|null} updated board or null if board is not found
  */
-const update = (id: string, title: string, columns: Column[]): Board | undefined => boardsRepo.update(id, title, columns);
+const update = (id: string, title: string, columns: Column[]): Board | null => boardsRepo.update(id, title, columns);
 /**
  * Delete board and return it
  * @param {string} id board id
@@ -34,4 +34,4 @@ const update = (id: string, title: string, columns: Column[]): Board | undefined
  */
 const deleteBoard = (id: string): boolean => boardsRepo.deleteBoard(id);
 
-module.exports = {getAll, getBoard, save, update, deleteBoard };
+export {getAll, getBoard, save, update, deleteBoard };

@@ -1,6 +1,20 @@
 import { v4 as uuid } from 'uuid';
 
 class Task {
+  id?:string;
+
+  title:string;
+
+  order:number;
+
+  description:string;
+
+  userId:string;
+
+  boardId:string;
+
+  columnId:string;
+
   /**
    * Create task
    * @param {string} id task id
@@ -11,16 +25,14 @@ class Task {
    * @param {string} boardId id of board where task is
    * @param {string} columnId id of column where task is
    */
-  constructor({
-                id = uuid(),
-                title = 'title',
-                order = 0,
-                description = 'description',
-                userId = 'userId',
-                boardId = 'boardId',
-                columnId = 'columnId'
-              } = {}) {
-    this.id = id;
+  constructor({ title,
+                order,
+                description,
+                userId,
+                boardId,
+                columnId
+              }:Task) {
+    this.id = uuid();
     this.title = title;
     this.order = order;
     this.description = description;
@@ -31,4 +43,4 @@ class Task {
 
 }
 
-module.exports = Task;
+export default Task;

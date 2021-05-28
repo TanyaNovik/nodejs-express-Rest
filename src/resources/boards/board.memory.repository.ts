@@ -1,6 +1,6 @@
 import Board from './board.model';
 import Column from './column.model';
-import tasksService from '../tasks/task.service'
+import * as tasksService from '../tasks/task.service'
 
 const allBoards:Board[] = [];
 /**
@@ -55,4 +55,4 @@ const deleteBoard = (id:string):boolean => {
   }
   return false;
 }
-module.exports = { getAll, save, getById, update, deleteBoard};
+export { getAll, save, getById, update, deleteBoard};

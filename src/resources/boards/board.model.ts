@@ -1,6 +1,5 @@
 import { v4 as uuid } from 'uuid';
 import Column from './column.model';
-// const uuid = require('uuid').v4;
 
 class Board {
   id?: string;
