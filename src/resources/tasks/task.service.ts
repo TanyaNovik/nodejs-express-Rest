@@ -1,5 +1,5 @@
-import * as tasksRepo from '../tasks/task.memory.repository';
-import Task from '../tasks/task.model';
+import * as tasksRepo from './task.memory.repository';
+import Task from './task.model';
 
 /**
  * Return all tasks

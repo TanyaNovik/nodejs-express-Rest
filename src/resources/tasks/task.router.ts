@@ -1,5 +1,5 @@
 import Router from 'express';
-import * as tasksService from '../tasks/task.service';
+import * as tasksService from './task.service';
 
 const router = Router();
 
