@@ -1,6 +1,6 @@
-import Column from './column.model';
-import Board from './board.model';
-import * as boardsRepo from './board.memory.repository';
+import Column from '../boards/column.model';
+import Board from '../boards/board.model';
+import * as boardsRepo from '../boards/board.memory.repository';
 /**
  * Return all boards
  * @returns {Board[]} all boards

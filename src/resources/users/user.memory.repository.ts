@@ -1,4 +1,4 @@
-import User from './user.model';
+import User from '../users/user.model';
 import * as tasksService from '../tasks/task.service';
 
 const allUsers:User[] = [];

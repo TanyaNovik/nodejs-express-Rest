@@ -1,5 +1,5 @@
-import * as tasksRepo from './task.memory.repository';
-import Task from './task.model';
+import * as tasksRepo from '../tasks/task.memory.repository';
+import Task from '../tasks/task.model';
 
 /**
  * Return all tasks
@@ -32,9 +32,9 @@ const save = (title: string, order: number, description: string, userId: string,
  * @param {string} userId id of task owner
  * @param {string} boardId id of bord where task is
  * @param {string} columnId id of column where task is
- * @returns {null|Task} saved task or null
+ * @returns {Task|null} saved task or null
  */
-const update = (id: string, title: string, order: number, description: string, userId: string, boardId: string, columnId: string): null | Task => tasksRepo.update(id, title, order, description, userId, boardId, columnId);
+const update = (id: string, title: string, order: number, description: string, userId: string, boardId: string, columnId: string): Task|null => tasksRepo.update(id, title, order, description, userId, boardId, columnId);
 /**
  * Delete task
  * @param {string} id task id

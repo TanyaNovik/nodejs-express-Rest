@@ -1,5 +1,5 @@
-import Board from './board.model';
-import Column from './column.model';
+import Board from '../boards/board.model';
+import Column from '../boards/column.model';
 import * as tasksService from '../tasks/task.service'
 
 const allBoards:Board[] = [];

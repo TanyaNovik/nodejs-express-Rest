@@ -1,5 +1,5 @@
 import * as usersRepo from './user.memory.repository';
-import User from './user.model';
+import User from '../users/user.model';
 /**
  * Return all users
  * @returns {User[]} all users

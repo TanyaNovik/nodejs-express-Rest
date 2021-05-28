@@ -1,7 +1,9 @@
-import { Router as router } from 'express';
-import * as tasksService from './task.service';
+import Router from 'express';
+import * as tasksService from '../tasks/task.service';
 
-router.route('/:boardId/tasks').get(async (req, res) => {
+const router = Router();
+
+router.route('/:boardId/tasks').get(async (_, res) => {
   try {
     const tasks = await tasksService.getAll();
     res.status(200).json(tasks);

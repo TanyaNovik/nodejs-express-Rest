@@ -1,4 +1,4 @@
-import Task from './task.model';
+import Task from '../tasks/task.model';
 
 let allTasks:Task[] = [];
 /**
@@ -36,9 +36,9 @@ const save = (title: string, order: number, description: string, userId: string,
  * @param {string} userId id of task owner
  * @param {string} boardId id of bord where task is
  * @param {string} columnId id of column where task is
- * @returns {null|Task>} saved task or null
+ * @returns {Task|null} saved task or null
  */
-const update = (id: string, title: string, order: number, description: string, userId: string, boardId: string, columnId: string): null | Task => {
+const update = (id: string, title: string, order: number, description: string, userId: string, boardId: string, columnId: string): Task|null => {
   const needIndex = allTasks.findIndex(task => task.id === id);
   if(needIndex) {
     const newTask = new Task({id, title, order, description, userId, boardId, columnId});

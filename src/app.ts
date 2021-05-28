@@ -1,7 +1,7 @@
 import express from 'express';
 import swaggerUI from 'swagger-ui-express';
 import path from 'path';
-import {YAML} from 'yamljs';
+import YAML from 'yamljs';
 import userRouter from './resources/users/user.router';
 import boardRouter from './resources/boards/board.router';
 import taskRouter from './resources/tasks/task.router';
@@ -25,4 +25,4 @@ app.use('/users', userRouter);
 app.use('/boards', boardRouter);
 app.use('/boards', taskRouter);
 
-module.exports = app;
+export default app;
