@@ -1,4 +1,4 @@
-const Task = require('./task.model');
+import Task from './task.model';
 
 let allTasks = [];
 /**
@@ -60,7 +60,7 @@ const deleteTaskById = (id) => {
  * Delete task by board id
  * @param {string} boardId board id
  */
-const deleteTaskByBordId = (boardId) => {
+const deleteTaskByBordId = (boardId)  => {
   allTasks = allTasks.filter(task => task.boardId !== boardId);
 }
 /**

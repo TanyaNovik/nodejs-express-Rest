@@ -1,4 +1,4 @@
-const usersRepo = require('./user.memory.repository');
+import usersRepo from './user.memory.repository';
 /**
  * Return all users
  * @returns {User[]} all users

@@ -1,6 +1,12 @@
-const uuid = require('uuid').v4;
+import { v4 as uuid } from 'uuid';
 
 class Column {
+  id: string;
+
+  title: string;
+
+  order: number;
+
   /**
    * Create column
    * @param {string} id column id
@@ -19,4 +25,4 @@ class Column {
 
 }
 
-module.exports = Column;
+export default Column;

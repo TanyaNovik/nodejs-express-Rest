@@ -1,5 +1,5 @@
-const User = require('./user.model');
-const tasksService = require('../tasks/task.service');
+import User from './user.model';
+import tasksService from '../tasks/task.service';
 
 const allUsers = [];
 /**

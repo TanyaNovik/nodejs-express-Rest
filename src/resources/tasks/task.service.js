@@ -1,4 +1,4 @@
-const tasksRepo = require('./task.memory.repository');
+import tasksRepo from './task.memory.repository';
 
 /**
  * Return all tasks
