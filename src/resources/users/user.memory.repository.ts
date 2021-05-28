@@ -1,18 +1,18 @@
 import User from './user.model';
-import tasksService from '../tasks/task.service';
+import * as tasksService from '../tasks/task.service';
 
-const allUsers = [];
+const allUsers:User[] = [];
 /**
  * Return all users
  * @returns {User[]} all users
  */
-const getAll = () => allUsers;
+const getAll = ():User[] => allUsers;
 /**
  * Return found user by id
  * @param {string} id user id
  * @returns {User|null} found user or null if user is not found
  */
-const getById = (id) => allUsers.find(user => user.id === id) ?? null;
+const getById = (id: string): User | null => allUsers.find(user => user.id === id) ?? null;
 /**
  * Save user and return it
  * @param {string} name user name
@@ -20,7 +20,7 @@ const getById = (id) => allUsers.find(user => user.id === id) ?? null;
  * @param {string} password user password
  * @returns {User} added user
  */
-const save = (name, login, password) => {
+const save = (name: string, login: string, password: string): User => {
   const newUser = new User({name, login, password});
   allUsers.push(newUser);
   return newUser;
@@ -33,7 +33,7 @@ const save = (name, login, password) => {
  * @param {string} password user password
  * @returns {User|null} saved user or null if user is not found
  */
-const update = (id, name, login, password) => {
+const update = (id: string, name: string, login: string, password: string): User | null => {
   const needUser = allUsers.find(user => user.id === id);
   if(needUser){
     needUser.name = name;
@@ -48,13 +48,13 @@ const update = (id, name, login, password) => {
  * @param {string} id user id
  * @returns {boolean} true or false
  */
-const deleteUser = async (id) => {
+const deleteUser = (id: string): boolean => {
   const index = allUsers.findIndex(user => user.id === id);
   const result = allUsers.splice(index, 1);
   if(result){
-    await tasksService.anonymizeAssignee(id);
+    tasksService.anonymizeAssignee(id);
     return true
   }
   return false;
 }
-module.exports = { getAll, getById, save, update, deleteUser };
+export { getAll, getById, save, update, deleteUser };

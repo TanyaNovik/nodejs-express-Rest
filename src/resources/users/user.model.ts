@@ -1,6 +1,19 @@
 import { v4 as uuid } from 'uuid';
 
+interface IUserPrivate{
+  id?:string;
+  name:string;
+  login:string;
+}
 class User {
+  id?:string;
+
+  name:string;
+
+  login:string;
+
+  password:string;
+
   /**
    * Create user
    * @param {string} id user id
@@ -9,12 +22,11 @@ class User {
    * @param {string} password user password
    */
   constructor({
-    id = uuid(),
-    name = 'USER',
-    login = 'user',
-    password = 'P@55w0rd'
-  } = {}) {
-    this.id = id;
+    name,
+    login,
+    password
+  }:User) {
+    this.id = uuid();
     this.name = name;
     this.login = login;
     this.password = password;
@@ -25,10 +37,10 @@ class User {
    * @param {User} user user object for modification
    * @returns {{name: *, id: *, login: *}} object without password
    */
-  static toResponse(user) {
+  static toResponse(user:User):IUserPrivate {
     const { id, name, login } = user;
     return { id, name, login };
   }
 }
 
-module.exports = User;
+export default User;
