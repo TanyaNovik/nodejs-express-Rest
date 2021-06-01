@@ -1,8 +1,10 @@
+import { createWriteStream } from 'fs';
 import express from 'express';
 import swaggerUI from 'swagger-ui-express';
 import path from 'path';
 import YAML from 'yamljs';
 import { finished } from 'stream';
+import morgan from 'morgan';
 import userRouter from './resources/users/user.router';
 import boardRouter from './resources/boards/board.router';
 import taskRouter from './resources/tasks/task.router';
@@ -13,7 +15,7 @@ const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 app.use(express.json());
 
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
-
+app.use(morgan('dev', {stream: createWriteStream('./access.log')}))
 app.use('/', (req, res, next) => {
   const { method, url, body} = req;
   if (req.originalUrl === '/') {
