@@ -14,7 +14,9 @@
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
     "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace",
-    "doc": "./node_modules/.bin/jsdoc -r src/"
+    "doc": "./node_modules/.bin/jsdoc -r src/",
+    "compile": "tsc && node ./build/server.js",
+    "dev": "npx nodemon -L -e ts --exec \"npm run compile\""
   },
   "keywords": [
     "rs",

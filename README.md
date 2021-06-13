@@ -1,3 +1,7 @@
+Run docker compose 
+1. docker-compose up --build
+
+
 # RS School REST service
 
 ## Prerequisites
