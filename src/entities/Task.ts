@@ -19,7 +19,7 @@ export class TaskDB {
   description:string;
 
   @ManyToOne(() => UserDB, user => user.id)
-  userId: string;
+  userId: string | null;
 
   @ManyToOne(() => BoardDB, board => board.id)
   boardId: string;

@@ -1,4 +1,4 @@
-import { getManager, getRepository } from 'typeorm';
+import { getRepository } from 'typeorm';
 import {UserDB} from '../../entities/User';
 import * as tasksService from '../tasks/task.service';
 
@@ -17,10 +17,9 @@ const getAll = async ():Promise<UserDB[]> => {
  * @returns {User|null} found user or null if user is not found
  */
 const getById = async (id: string): Promise<UserDB | null> =>{
-  const userRepository = getManager().getRepository(UserDB);
+  const userRepository = getRepository(UserDB);
   const findUser = await userRepository.findOne(id);
-  if(findUser === undefined) return null;
-  return findUser;
+  return findUser ?? null;
 }
 /**
  * Save user and return it
@@ -30,7 +29,7 @@ const getById = async (id: string): Promise<UserDB | null> =>{
  * @returns {User} added user
  */
 const save = async (name: string, login: string, password: string): Promise<UserDB> => {
-  const userRepository = getManager().getRepository(UserDB);
+  const userRepository = getRepository(UserDB);
   const newUser = userRepository.create({name, login, password});
   const savedUser = userRepository.save(newUser);
   return savedUser;
@@ -44,7 +43,7 @@ const save = async (name: string, login: string, password: string): Promise<User
  * @returns {User|null} saved user or null if user is not found
  */
 const update = async(id: string, name: string, login: string, password: string): Promise<UserDB | null> => {
-  const userRepository = getManager().getRepository(UserDB);
+  const userRepository = getRepository(UserDB);
   const findUser = await userRepository.findOne(id);
   if(findUser === undefined) return null;
   const updatedUser = await userRepository.update(id, {name, login, password});
@@ -56,7 +55,7 @@ const update = async(id: string, name: string, login: string, password: string):
  * @returns {boolean} true or false
  */
 const deleteUser = async(id: string): Promise<boolean> => {
-  const userRepository = getManager().getRepository(UserDB);
+  const userRepository = getRepository(UserDB);
   const deletedUser = await userRepository.delete(id)
   if(deletedUser.affected){
     tasksService.anonymizeAssignee(id);

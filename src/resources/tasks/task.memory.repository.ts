@@ -1,17 +1,26 @@
-import Task from './task.model';
-
-let allTasks:Task[] = [];
+import { getRepository } from 'typeorm';
+// import Task from './task.model';
+import {TaskDB} from '../../entities/Task'
+// let allTasks:Task[] = [];
 /**
  * Return all tasks
  * @returns {Task[]} all tasks
  */
-const getAll = ():Task[] => allTasks;
+const getAll = async ():Promise<TaskDB[]> => {
+  const taskRepository = await getRepository(TaskDB);
+  const allTasks = await taskRepository.find({where:{}})
+  return allTasks;
+}
 /**
  * Return found task by id
  * @param {string} id task id
  * @returns {Task|null} found task or null if task is not found
  */
-const getById = (id: string): Task | null => allTasks.find(board => board.id === id) ?? null;
+const getById = async (id: string): Promise<TaskDB | null> => {
+  const taskRepository = await getRepository(TaskDB);
+  const findTask = await taskRepository.findOne(id);
+  return findTask ?? null;
+}
 /**
  * Save task and return it
  * @param {string} title task title
@@ -22,10 +31,11 @@ const getById = (id: string): Task | null => allTasks.find(board => board.id ===
  * @param {string} columnId id of column where task is
  * @returns {Task} added task
  */
-const save = (title: string, order: number, description: string, userId: string, boardId: string, columnId: string): Task => {
-  const newTask = new Task({title, order, description, userId, boardId, columnId});
-  allTasks.push(newTask);
-  return newTask;
+const save = async (title: string, order: number, description: string, userId: string, boardId: string, columnId: string): Promise<TaskDB> => {
+  const taskRepository = await getRepository(TaskDB);
+  const newTask = taskRepository.create({title, order, description, userId, boardId, columnId})
+  const savedTask = taskRepository.save(newTask);
+  return savedTask;
 };
 /**
  * Update task and return it
@@ -38,42 +48,53 @@ const save = (title: string, order: number, description: string, userId: string,
  * @param {string} columnId id of column where task is
  * @returns {Task|null} saved task or null
  */
-const update = (id: string, title: string, order: number, description: string, userId: string, boardId: string, columnId: string): Task|null => {
-  const needIndex = allTasks.findIndex(task => task.id === id);
-  if(needIndex) {
-    const newTask = new Task({id, title, order, description, userId, boardId, columnId});
-    allTasks[needIndex] = newTask;
-    return newTask;
-  }
-  return null;
+const update = async (id: string, title: string, order: number, description: string, userId: string, boardId: string, columnId: string): Promise<TaskDB|null> => {
+  const taskRepository = await getRepository(TaskDB);
+  const findTask = await taskRepository.findOne(id);
+  if (findTask === undefined) return null;
+  const updatedTask = await taskRepository.update(id, {id, title, order, description, userId, boardId, columnId})
+  return updatedTask.raw;
 }
 /**
  * Delete task
  * @param {string} id task id
  * @returns {Task[]} deleted task
  */
-const deleteTaskById = (id: string): Task[] => {
-  const index = allTasks.findIndex(task => task.id === id);
-  return allTasks.splice(index, 1);
+const deleteTaskById = async (id: string): Promise<boolean> => {
+  const taskRepository = await getRepository(TaskDB);
+  const deletedTask = await taskRepository.delete(id);
+  if(deletedTask.affected){
+    return true;
+  }
+  return false;
 }
 /**
  * Delete task by board id
  * @param {string} boardId board id
  */
-const deleteTaskByBordId = (boardId: string):void  => {
-  allTasks = allTasks.filter(task => task.boardId !== boardId);
+const deleteTaskByBordId = async (boardId: string):Promise<void>  => {
+  const taskRepository = await getRepository(TaskDB);
+  await taskRepository.delete(boardId);
+  // allTasks = allTasks.filter(task => task.boardId !== boardId);
 }
 /**
  * Search tasks where owner id = userId and set userId for that task null
  * @param {string} userId user id
  */
-const anonymizeAssignee = (userId: string):void => {
-  allTasks.map(task => {
-    if(task.userId === userId){
-      const newTask = Object.assign(task, {userId:null});
-      return newTask
-    }
-    return task;
-  });
+const anonymizeAssignee = async (userId: string):Promise<void> => {
+  const taskRepository = await getRepository(TaskDB);
+  const findTasks = await taskRepository.find({where:{userId}});
+  if(findTasks){
+    findTasks.forEach((task:TaskDB) =>  taskRepository.update(task.id as string, {userId:null}))
+  }
+  // const updatedTask = await findTasks.update(id, {id, title, order, description, userId, boardId, columnId})
+
+  // allTasks.map(task => {
+  //   if(task.userId === userId){
+  //     const newTask = Object.assign(task, {userId:null});
+  //     return newTask
+  //   }
+  //   return task;
+  // });
 }
 export { getAll, save, getById, update, deleteTaskById, deleteTaskByBordId, anonymizeAssignee};
