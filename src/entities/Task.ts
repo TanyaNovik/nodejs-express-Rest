@@ -18,13 +18,13 @@ export class TaskDB {
   @Column('varchar', {length: 45})
   description:string;
 
-  @ManyToOne(() => UserDB, user => user.id)
-  userId: string | null;
+  @ManyToOne(() => UserDB, { eager: true })
+  public userId: string | null;
 
-  @ManyToOne(() => BoardDB, board => board.id)
-  boardId: string;
+  @ManyToOne(() => BoardDB, { eager: true, onDelete: 'CASCADE' })
+  public boardId: string | null;
 
-  @ManyToOne(() => ColumnDB, column => column.id)
-  columnId: string;
+  @ManyToOne(() => ColumnDB, {eager: true})
+  public columnId: string;
 
 }
