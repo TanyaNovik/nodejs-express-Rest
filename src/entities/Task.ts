@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { UserDB } from './User';
 import { BoardDB } from './Board';
 import { ColumnDB } from './Colunm';
@@ -19,15 +19,12 @@ export class TaskDB {
   description:string;
 
   @ManyToOne(() => UserDB)
-  @JoinColumn({ name: 'userId', referencedColumnName: 'id' })
   public userId?: string | null;
 
   @ManyToOne(() => BoardDB,  { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'boardId', referencedColumnName: 'id' })
   public boardId?: string;
 
   @ManyToOne(() => ColumnDB)
-  @JoinColumn({ name: 'columnId', referencedColumnName: 'id' })
   public columnId?: string;
 
 }

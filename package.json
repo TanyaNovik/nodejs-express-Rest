@@ -16,7 +16,8 @@
     "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace",
     "doc": "./node_modules/.bin/jsdoc -r src/",
     "compile": "tsc && node ./build/server.js",
-    "dev": "npx nodemon -L --exitcrash -e ts --exec \"npm run compile\""
+    "dev": "npx nodemon -L --exitcrash -e ts --exec \"npm run compile\"",
+    "typeorm-generate": "typeorm migration:generate -n db -f ./build/common/ormconfig-migrations"
   },
   "keywords": [
     "rs",

@@ -10,19 +10,18 @@ dotenv.config({
 export const config = {
   // name: 'my-connection',
   type: 'postgres',
-  synchronize: true,
+  synchronize: false,
   logging: false,
   host: process.env.POSTGRES_HOST,
   port: process.env.POSTGRES_PORT,
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
-  // autoReconnect: true,
-  // reconnectTries: Number.MAX_VALUE,
-  // reconnectionInterval: 1000,
   entities: [path.join(__dirname, '../entities/*{.ts,.js}')],
-  migrations: [path.join(__dirname, '/migration/**/*.ts')],
+  migrations: [path.join(__dirname, '../migration/*{.ts,.js}')],
   cli: {
-    migrationsDir: 'src/migrations',
+    migrationsDir: 'src/migration/',
+    entitiesDir: 'src/entities/*{.ts,.js}'
   },
+  migrationsRun: true
 } as ConnectionOptions;
