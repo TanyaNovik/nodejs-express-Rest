@@ -1,3 +1,8 @@
+Run application:
+1. npm install
+2. docker-compose up --build
+
+
 # RS School REST service
 
 ## Prerequisites
