@@ -1,14 +1,12 @@
 import { getRepository } from 'typeorm';
-// import Task from './task.model';
 import {TaskDB} from '../../entities/Task'
-// let allTasks:Task[] = [];
 /**
  * Return all tasks
  * @returns {Task[]} all tasks
  */
 const getAll = async ():Promise<TaskDB[]> => {
   const taskRepository = await getRepository(TaskDB);
-  const allTasks = await taskRepository.find({where:{}})
+  const allTasks = await taskRepository.find({where:{}, loadRelationIds: true})
   return allTasks;
 }
 /**
@@ -18,7 +16,7 @@ const getAll = async ():Promise<TaskDB[]> => {
  */
 const getById = async (id: string): Promise<TaskDB | null> => {
   const taskRepository = await getRepository(TaskDB);
-  const findTask = await taskRepository.findOne(id);
+  const findTask = await taskRepository.findOne({where:{id}, loadRelationIds: true});
   return findTask ?? null;
 }
 /**
@@ -53,10 +51,8 @@ const update = async (id: string, title: string, order: number, description: str
   const findTask = await taskRepository.findOne(id);
   if (findTask === undefined) return null;
   await taskRepository.update(id, {title, order, description, userId, boardId, columnId})
-  const newfindTask = await taskRepository.findOne(id);
-
-  console.log('!!!!newBoard ', newfindTask)
-  return newfindTask ?? null;
+  const newTask = await taskRepository.findOne(id)
+  return newTask ?? null;
 }
 /**
  * Delete task
@@ -77,7 +73,7 @@ const deleteTaskById = async (id: string): Promise<boolean> => {
  */
 const deleteTaskByBordId = async (boardId: string):Promise<void>  => {
   const taskRepository = await getRepository(TaskDB);
-  await taskRepository.delete(boardId);
+  await taskRepository.delete({boardId});
 }
 /**
  * Search tasks where owner id = userId and set userId for that task null
@@ -85,7 +81,6 @@ const deleteTaskByBordId = async (boardId: string):Promise<void>  => {
  */
 const anonymizeAssignee = async (userId: string):Promise<void> => {
   const taskRepository = await getRepository(TaskDB);
-  await taskRepository.find({where:{userId}});
-   await taskRepository.update({userId}, {'userId':null})
+  await taskRepository.update({userId}, {'userId':null})
 }
 export { getAll, save, getById, update, deleteTaskById, deleteTaskByBordId, anonymizeAssignee};

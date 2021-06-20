@@ -1,5 +1,4 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-// import {ColumnDB} from './Colunm'
 
 @Entity({name: 'board'})
 export class BoardDB {
@@ -10,8 +9,6 @@ export class BoardDB {
   @Column('varchar', {length: 25})
   title:string;
 
-  // @OneToMany(() => ColumnDB, column => column)
-  // columns: ColumnDB[];
   @Column('json')
   columns:[];
 

@@ -55,7 +55,6 @@ const update = async(id: string, name: string, login: string, password: string):
  * @returns {boolean} true or false
  */
 const deleteUser = async(id: string): Promise<boolean> => {
-  console.log('UserId!!!!!!! ', id)
   const userRepository = await getRepository(UserDB);
   await tasksService.anonymizeAssignee(id);
   const deletedUser = await userRepository.delete(id)

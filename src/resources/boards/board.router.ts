@@ -40,10 +40,9 @@ router.route('/').post(async (req, res) => {
 });
 
 router.route('/:id').put(async (req, res) => {
-
+  try {
     const { title, columns } = req.body;
     const board = await boardsService.update(req.params.id, title, columns);
-  try {
     if (board) {
       res.status(200).json(board);
     } else {
