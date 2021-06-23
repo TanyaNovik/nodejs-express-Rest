@@ -2,6 +2,10 @@ import { getRepository } from 'typeorm';
 import {UserDB} from '../../entities/User';
 import * as tasksService from '../tasks/task.service';
 
+export interface IProps{
+  login: string,
+  password: string
+}
 /**
  * Return all users
  * @returns {User[]} all users
@@ -63,4 +67,10 @@ const deleteUser = async(id: string): Promise<boolean> => {
   }
   return false;
 }
-export { getAll, getById, save, update, deleteUser };
+
+const getByProps = async (props:IProps): Promise<UserDB | null> => {
+  const userRepository = await getRepository(UserDB);
+  const findUser = await userRepository.findOne({ login: props.login, password: props.password });
+  return findUser ?? null;
+}
+export { getAll, getById, save, update, deleteUser, getByProps };

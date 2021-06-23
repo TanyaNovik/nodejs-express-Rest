@@ -1,5 +1,6 @@
 import * as usersRepo from './user.memory.repository';
 import {UserDB} from '../../entities/User';
+import { IProps } from './user.memory.repository';
 
 /**
  * Return all users
@@ -36,4 +37,6 @@ const update = (id: string, name: string, login: string, password: string): Prom
  */
 const deleteUser = (id: string): Promise<boolean> => usersRepo.deleteUser(id);
 
-export { getAll, getUser, save, update, deleteUser };
+const getByProps = (props: IProps): Promise<UserDB | null> => usersRepo.getByProps(props);
+
+export { getAll, getUser, save, update, deleteUser, getByProps };
