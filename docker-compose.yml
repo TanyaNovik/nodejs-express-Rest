@@ -16,6 +16,7 @@ services:
     volumes:
       - .:/usr/app
       - ./log:/usr/app/log
+      - node_modules:/usr/app/node_modules
     networks:
       - app-network
   postgres:

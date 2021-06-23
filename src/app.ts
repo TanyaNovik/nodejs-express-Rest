@@ -11,6 +11,7 @@ import boardRouter from './resources/boards/board.router';
 import taskRouter from './resources/tasks/task.router';
 import loginRouter from './resources/login/login.router';
 import './errorHandler';
+import {checkToken} from './validate-session';
 
 const logPath = './log/';
 
@@ -43,9 +44,9 @@ app.use('/', (req, res, next) => {
 
 // Promise.reject(Error('Oops!'));
 app.use('/login', loginRouter)
-app.use('/users', userRouter);
-app.use('/boards', boardRouter);
-app.use('/boards', taskRouter);
+app.use('/users', checkToken, userRouter);
+app.use('/boards', checkToken, boardRouter);
+app.use('/boards', checkToken, taskRouter);
 app.use((err: Error, _req: Request, res: Response, next: NextFunction) => {
     writeFileSync(`${logPath}error.log`, `\nCatch error: ${err.message}`, { flag: 'a' });
     console.error(`Catch error: ${err.message}`);
