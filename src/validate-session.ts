@@ -7,8 +7,7 @@ interface IDecodeData{
   login: string
 }
 const checkToken = async (req:Request, res:Response, next:NextFunction) => {
-  const authorizationToken = req.header('Authorization');
-
+  const authorizationToken = req.headers.authorization;
   if (authorizationToken !== undefined) {
     const [type, token] = authorizationToken.split(' ');
     if (type === 'Bearer') {
@@ -22,9 +21,7 @@ const checkToken = async (req:Request, res:Response, next:NextFunction) => {
       } catch (err){
         res.status(401).send('Unauthorized user!');
       }
-
     }
-
   }
   res.status(401).send('Unauthorized user!');
 };

@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 import * as usersService from '../users/user.service';
 
-const signToken = async (loginUser: string, password: string): Promise<null | string> => {
-  const user = await usersService.getByProps({ login: loginUser, password });
+const signToken = async (loginUser: string): Promise<null | string> => {
+  const user = await usersService.getByProps(loginUser);
   if (!user) {
     return null;
   }

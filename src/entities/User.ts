@@ -19,7 +19,7 @@ export class UserDB {
   @Column('varchar', {length: 25})
   login:string;
   
-  @Column('varchar', {length: 75})
+  @Column()
   password:string;
 
   @BeforeInsert()
