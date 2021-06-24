@@ -1,5 +1,6 @@
 node_modules
 build
+dbdata
 .idea
 out
 log

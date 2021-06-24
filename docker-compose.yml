@@ -23,7 +23,7 @@ services:
     image: tanyanovik/postgres
     build: ./database
     container_name: ${POSTGRES_HOST_NAME}
-    restart: on-failure
+    restart: always
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
     environment:
