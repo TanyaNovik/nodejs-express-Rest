@@ -11,7 +11,7 @@ export const config = {
   // name: 'my-connection',
   type: 'postgres',
   migrationsRun: true,
-  // synchronize: false,
+  synchronize: false,
   logging: false,
   host: process.env.POSTGRES_HOST,
   port: process.env.POSTGRES_PORT,
