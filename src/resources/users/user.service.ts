@@ -1,16 +1,17 @@
 import * as usersRepo from './user.memory.repository';
-import User from '../users/user.model';
+import {UserDB} from '../../entities/User';
+
 /**
  * Return all users
  * @returns {User[]} all users
  */
-const getAll = ():User[] => usersRepo.getAll();
+const getAll = ():Promise<UserDB[]> => usersRepo.getAll();
 /**
  * Return found user by id
  * @param {string} id user id
  * @returns {User|null} found user or null if user is not found
  */
-const getUser = (id: string): User | null => usersRepo.getById(id);
+const getUser = (id: string): Promise<UserDB | null> => usersRepo.getById(id);
 /**
  * Save user and return it
  * @param {string} name user name
@@ -18,7 +19,7 @@ const getUser = (id: string): User | null => usersRepo.getById(id);
  * @param {string} password user password
  * @returns {User} added user
  */
-const save = (name: string, login: string, password: string): User => usersRepo.save(name, login, password);
+const save = (name: string, login: string, password: string): Promise<UserDB> => usersRepo.save(name, login, password);
 /**
  * Update user and return it
  * @param {string} id user id
@@ -27,12 +28,12 @@ const save = (name: string, login: string, password: string): User => usersRepo.
  * @param {string} password user password
  * @returns {User|null} saved user or null if user is not found
  */
-const update = (id: string, name: string, login: string, password: string): User | null => usersRepo.update(id, name, login, password);
+const update = (id: string, name: string, login: string, password: string): Promise<UserDB | null> => usersRepo.update(id, name, login, password);
 /**
  * Delete user
  * @param {string} id user id
  * @returns {boolean} true or false
  */
-const deleteUser = (id: string): boolean => usersRepo.deleteUser(id);
+const deleteUser = (id: string): Promise<boolean> => usersRepo.deleteUser(id);
 
 export { getAll, getUser, save, update, deleteUser };

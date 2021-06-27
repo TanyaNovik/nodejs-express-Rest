@@ -19,6 +19,7 @@
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
     "typeRoots": [
       "node_modules/@types",
       "src/typings"

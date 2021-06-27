@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import * as usersService from '../users/user.service';
-import User from '../users/user.model';
+import { UserDB } from '../../entities/User';
 
 const router = Router();
 router.route('/').get(async (_, res) => {
   try {
     const users = await usersService.getAll();
-    res.status(200).json(users.map(User.toResponse));
+    res.status(200).json(users.map(UserDB.toResponse));
   } catch {
     res.status(401).json('Access token is missing or invalid');
   }
@@ -17,7 +17,7 @@ router.route('/:id').get(async (req, res) => {
   try {
     const user = await usersService.getUser(req.params.id);
     if (user) {
-      res.status(200).json(User.toResponse(user));
+      res.status(200).json(UserDB.toResponse(user));
     } else {
       res.status(404).json('User not found');
     }
@@ -32,7 +32,7 @@ router.route('/').post(async (req, res) => {
     const { name, login, password } = req.body;
     const user = await usersService.save(name, login, password);
     if (user) {
-      res.status(201).json(User.toResponse(user));
+      res.status(201).json(UserDB.toResponse(user));
     } else {
       res.status(400).json('Bad request');
     }
@@ -46,7 +46,7 @@ router.route('/:id').put(async (req, res) => {
     const { name, login, password } = req.body;
     const user = await usersService.update(req.params.id, name, login, password);
     if (user) {
-      res.status(200).json(User.toResponse(user));
+      res.status(200).json(UserDB.toResponse(user));
     } else {
       res.status(400).json('Bad request');
     }

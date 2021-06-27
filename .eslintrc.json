@@ -27,6 +27,7 @@
   "plugins": [
     "@typescript-eslint"
   ],
+  "ignorePatterns": ["src/migration/*.ts"],
   "rules": {
     "import/extensions": "off",
     "linebreak-style": "off",

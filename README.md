@@ -2,6 +2,15 @@ Run application:
 1. npm install
 2. docker-compose up --build
 
+For generating migration
+1. delete folder src/migration
+2. npm run typeorm-generate
+
+
+
+
+
+
 
 # RS School REST service
 

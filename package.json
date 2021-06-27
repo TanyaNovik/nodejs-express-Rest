@@ -16,7 +16,8 @@
     "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace",
     "doc": "./node_modules/.bin/jsdoc -r src/",
     "compile": "tsc && node ./build/server.js",
-    "dev": "npx nodemon -L -e ts --exec \"npm run compile\""
+    "dev": "npx nodemon -L --exitcrash -e ts --exec \"npm run compile\"",
+    "typeorm-generate": "typeorm migration:generate -n db -f ./build/common/ormconfig-migrations"
   },
   "keywords": [
     "rs",
@@ -52,7 +53,9 @@
     "dotenv": "9.0.0",
     "express": "4.17.1",
     "http-status-codes": "^2.1.4",
+    "pg": "^8.6.0",
     "swagger-ui-express": "4.1.6",
+    "typeorm": "^0.2.34",
     "uuid": "8.3.2",
     "yamljs": "0.3.0"
   },
