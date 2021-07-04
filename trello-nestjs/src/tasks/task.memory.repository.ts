@@ -43,7 +43,6 @@ const save = async (
   boardId: string,
   columnId: string,
 ): Promise<TaskDB> => {
-  console.log('boardId', boardId)
   const taskRepository = await getRepository(TaskDB);
   const newTask = await taskRepository.create({
     title,
@@ -88,7 +87,6 @@ const update = async (
     columnId,
   });
   const newTask = await taskRepository.findOne(id);
-  console.log('POST ', newTask)
   return newTask ?? null;
 };
 /**

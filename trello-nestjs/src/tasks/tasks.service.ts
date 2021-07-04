@@ -6,7 +6,6 @@ import * as tasksRepo from './task.memory.repository';
 @Injectable()
 export class TasksService {
   create(createTaskDto: CreateTaskDto, boardId) {
-    console.log('createTaskDto', createTaskDto)
     return tasksRepo.save(
       createTaskDto.title,
       createTaskDto.order,

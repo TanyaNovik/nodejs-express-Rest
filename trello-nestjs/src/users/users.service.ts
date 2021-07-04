@@ -5,8 +5,8 @@ import * as usersRepo from './user.memory.repository';
 
 @Injectable()
 export class UsersService {
-  constructor() {
-  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  constructor() {}
 
   create(createUserDto: CreateUserDto) {
     return usersRepo.save(

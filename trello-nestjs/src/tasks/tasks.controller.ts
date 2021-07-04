@@ -7,13 +7,15 @@ import {
   Delete,
   Put,
   HttpException,
-  HttpStatus,
+  HttpStatus, UseGuards
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('/boards/:boardId/tasks')
+@UseGuards(JwtAuthGuard)
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
@@ -22,7 +24,6 @@ export class TasksController {
     @Param('boardId') boardId: string,
     @Body() createTaskDto: CreateTaskDto,
   ) {
-    console.log('createTaskDto', createTaskDto);
     return this.tasksService.create(createTaskDto, boardId);
   }
 

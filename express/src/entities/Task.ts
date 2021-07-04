@@ -25,6 +25,5 @@ export class TaskDB {
   public boardId?: string;
 
   @ManyToOne(() => ColumnDB)
-  public columnId?: string;
-
+  public columnId?: string | null;
 }
