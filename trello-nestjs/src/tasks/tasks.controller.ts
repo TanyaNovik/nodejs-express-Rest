@@ -7,15 +7,19 @@ import {
   Delete,
   Put,
   HttpException,
-  HttpStatus, UseGuards
+  HttpStatus,
+  UseGuards,
+  UseFilters,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { HttpExceptionFilter } from '../http-exception.filter';
 
 @Controller('/boards/:boardId/tasks')
 @UseGuards(JwtAuthGuard)
+@UseFilters(new HttpExceptionFilter())
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 

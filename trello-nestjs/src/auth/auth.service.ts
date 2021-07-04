@@ -5,9 +5,7 @@ import { IUserPrivate, UserDB } from '../users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private jwtService: JwtService,
-  ) {}
+  constructor(private jwtService: JwtService) {}
 
   async validateUser(
     login: string,
@@ -22,7 +20,7 @@ export class AuthService {
   }
 
   async login(user: UserDB) {
-    console.log('login = ', user, process.env.JWT_SECRET_KEY)
+    console.log('login = ', user, process.env.JWT_SECRET_KEY);
     const payload = { login: user.login, id: user.id };
     return {
       token: this.jwtService.sign(payload),
