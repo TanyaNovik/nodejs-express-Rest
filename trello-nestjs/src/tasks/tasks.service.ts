@@ -1,42 +1,59 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import * as tasksRepo from './task.memory.repository';
+import { getRepository } from 'typeorm';
+import { TaskDB } from './entities/task.entity';
 
 @Injectable()
 export class TasksService {
-  create(createTaskDto: CreateTaskDto, boardId) {
-    return tasksRepo.save(
-      createTaskDto.title,
-      createTaskDto.order,
-      createTaskDto.description,
-      createTaskDto.userId,
+  async create(createTaskDto: CreateTaskDto, boardId) {
+    const taskRepository = await getRepository(TaskDB);
+    const newTask = await taskRepository.create({
+      ...createTaskDto,
       boardId,
-      createTaskDto.columnId,
-    );
+    });
+    await taskRepository.save(newTask);
+    return newTask;
   }
 
-  findAll() {
-    return tasksRepo.getAll();
+  async findAll() {
+    const taskRepository = await getRepository(TaskDB);
+    const allTasks = await taskRepository.find({
+      where: {},
+      loadRelationIds: true,
+    });
+    return allTasks;
   }
 
-  findOne(id: string) {
-    return tasksRepo.getById(id);
+  async findOne(id: string) {
+    const taskRepository = await getRepository(TaskDB);
+    const findTask = await taskRepository.findOne({
+      where: { id },
+      loadRelationIds: true,
+    });
+    return findTask ?? null;
   }
 
-  update(id: string, updateTaskDto: UpdateTaskDto) {
-    return tasksRepo.update(
-      id,
-      updateTaskDto.title,
-      updateTaskDto.order,
-      updateTaskDto.description,
-      updateTaskDto.userId,
-      updateTaskDto.boardId,
-      updateTaskDto.columnId,
-    );
+  async update(id: string, updateTaskDto: UpdateTaskDto) {
+    const taskRepository = await getRepository(TaskDB);
+    const findTask = await taskRepository.findOne(id);
+    if (findTask === undefined) return null;
+    await taskRepository.update(id, updateTaskDto);
+    const newTask = await taskRepository.findOne(id);
+    return newTask ?? null;
   }
 
-  remove(id: string) {
-    return tasksRepo.deleteTaskById(id);
+  async remove(id: string) {
+    const taskRepository = await getRepository(TaskDB);
+    const deletedTask = await taskRepository.delete(id);
+    if (deletedTask.affected) {
+      return true;
+    }
+    return false;
+  }
+
+  async anonymizeAssignee(userId: string) {
+    const taskRepository = await getRepository(TaskDB);
+    await taskRepository.update({ userId }, { userId: null });
   }
 }

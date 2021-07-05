@@ -1,17 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { getByProps } from '../users/user.memory.repository';
 import { JwtService } from '@nestjs/jwt';
 import { IUserPrivate, UserDB } from '../users/entities/user.entity';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    private jwtService: JwtService,
+    private readonly usersService: UsersService,
+  ) {}
 
   async validateUser(
     login: string,
     password: string,
   ): Promise<IUserPrivate | null> {
-    const user = await getByProps(login);
+    const user = await this.usersService.getByProps(login);
     if (user && user.login === login) {
       const { password, ...result } = user;
       return result;
