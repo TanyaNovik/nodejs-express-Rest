@@ -63,4 +63,10 @@ const deleteUser = async(id: string): Promise<boolean> => {
   }
   return false;
 }
-export { getAll, getById, save, update, deleteUser };
+
+const getByProps = async (login:string): Promise<UserDB | null> => {
+  const userRepository = await getRepository(UserDB);
+  const findUser = await userRepository.findOne({ login });
+  return findUser ?? null;
+}
+export { getAll, getById, save, update, deleteUser, getByProps };

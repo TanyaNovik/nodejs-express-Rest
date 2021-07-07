@@ -36,4 +36,6 @@ const update = (id: string, name: string, login: string, password: string): Prom
  */
 const deleteUser = (id: string): Promise<boolean> => usersRepo.deleteUser(id);
 
-export { getAll, getUser, save, update, deleteUser };
+const getByProps = (login: string): Promise<UserDB | null> => usersRepo.getByProps(login);
+
+export { getAll, getUser, save, update, deleteUser, getByProps };
