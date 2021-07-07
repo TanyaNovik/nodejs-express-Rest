@@ -26,7 +26,7 @@ import { LoggingInterceptor } from './logging.interceptor';
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
       entities: [join(__dirname, './*/entities/*{.ts,.js}')],
-      // synchronize: true,
+      synchronize: true,
     }),
     UsersModule,
     BoardsModule,

@@ -1,0 +1,7 @@
+node_modules
+dist
+dbdata
+.idea
+out
+log
+.git

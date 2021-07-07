@@ -1,24 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { getRepository } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 import { TaskDB } from './entities/task.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class TasksService {
+  constructor(
+    @InjectRepository(TaskDB)
+    private tasksRepository: Repository<TaskDB>,
+  ) {}
   async create(createTaskDto: CreateTaskDto, boardId) {
-    const taskRepository = await getRepository(TaskDB);
-    const newTask = await taskRepository.create({
+    const newTask = await this.tasksRepository.create({
       ...createTaskDto,
       boardId,
     });
-    await taskRepository.save(newTask);
+    await this.tasksRepository.save(newTask);
     return newTask;
   }
 
   async findAll() {
-    const taskRepository = await getRepository(TaskDB);
-    const allTasks = await taskRepository.find({
+    const allTasks = await this.tasksRepository.find({
       where: {},
       loadRelationIds: true,
     });
@@ -26,8 +29,7 @@ export class TasksService {
   }
 
   async findOne(id: string) {
-    const taskRepository = await getRepository(TaskDB);
-    const findTask = await taskRepository.findOne({
+    const findTask = await this.tasksRepository.findOne({
       where: { id },
       loadRelationIds: true,
     });
@@ -35,17 +37,15 @@ export class TasksService {
   }
 
   async update(id: string, updateTaskDto: UpdateTaskDto) {
-    const taskRepository = await getRepository(TaskDB);
-    const findTask = await taskRepository.findOne(id);
+    const findTask = await this.tasksRepository.findOne(id);
     if (findTask === undefined) return null;
-    await taskRepository.update(id, updateTaskDto);
-    const newTask = await taskRepository.findOne(id);
+    await this.tasksRepository.update(id, updateTaskDto);
+    const newTask = await this.tasksRepository.findOne(id);
     return newTask ?? null;
   }
 
   async remove(id: string) {
-    const taskRepository = await getRepository(TaskDB);
-    const deletedTask = await taskRepository.delete(id);
+    const deletedTask = await this.tasksRepository.delete(id);
     if (deletedTask.affected) {
       return true;
     }
@@ -53,7 +53,6 @@ export class TasksService {
   }
 
   async anonymizeAssignee(userId: string) {
-    const taskRepository = await getRepository(TaskDB);
-    await taskRepository.update({ userId }, { userId: null });
+    await this.tasksRepository.update({ userId }, { userId: null });
   }
 }

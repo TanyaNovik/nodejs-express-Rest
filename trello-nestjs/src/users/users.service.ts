@@ -1,46 +1,48 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { getRepository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { UserDB } from './entities/user.entity';
 import { TasksService } from '../tasks/tasks.service';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UsersService {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private readonly tasksService: TasksService) {}
+  constructor(
+    @InjectRepository(UserDB)
+    private usersRepository: Repository<UserDB>,
+    private readonly tasksService: TasksService,
+  ) {
+    this.createAdmin();
+  }
 
   async create(createUserDto: CreateUserDto) {
-    const userRepository = await getRepository(UserDB);
-    const newUser = await userRepository.create(createUserDto);
-    const savedUser = await userRepository.save(newUser);
+    const newUser = await this.usersRepository.create(createUserDto);
+    const savedUser = await this.usersRepository.save(newUser);
     return savedUser;
   }
 
   async getAll() {
-    const userRepository = await getRepository(UserDB);
-    const allUsers = await userRepository.find({ where: {} });
+    const allUsers = await this.usersRepository.find({ where: {} });
     return allUsers;
   }
 
   async findOne(id: string) {
-    const userRepository = await getRepository(UserDB);
-    const findUser = await userRepository.findOne(id);
+    const findUser = await this.usersRepository.findOne(id);
     return findUser ?? null;
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    const userRepository = await getRepository(UserDB);
-    const findUser = await userRepository.findOne(id);
+    const findUser = await this.usersRepository.findOne(id);
     if (findUser === undefined) return null;
-    const updatedUser = await userRepository.update(id, updateUserDto);
+    const updatedUser = await this.usersRepository.update(id, updateUserDto);
     return updatedUser.raw;
   }
 
   async remove(id: string) {
-    const userRepository = await getRepository(UserDB);
     await this.tasksService.anonymizeAssignee(id);
-    const deletedUser = await userRepository.delete(id);
+    const deletedUser = await this.usersRepository.delete(id);
     if (deletedUser.affected) {
       return true;
     }
@@ -48,8 +50,22 @@ export class UsersService {
   }
 
   async getByProps(login: string) {
-    const userRepository = await getRepository(UserDB);
-    const findUser = await userRepository.findOne({ login });
+    const findUser = await this.usersRepository.findOne({ login });
     return findUser ?? null;
+  }
+
+  async createAdmin() {
+    const userLogin = 'admin';
+    const userPassword = 'admin';
+    const userName = 'admin';
+
+    const createdUser = await this.getByProps(userLogin);
+    if (!createdUser) {
+      await this.create({
+        name: userName,
+        login: userLogin,
+        password: userPassword,
+      });
+    }
   }
 }
