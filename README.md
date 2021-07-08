@@ -13,6 +13,10 @@ Success	        [ratio]	                            100.00%
 Status Codes	[code:count]                     	200:1000 201:250
 
 
+Run project:
+1. npm i
+2. docker-compose up --build
+
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>

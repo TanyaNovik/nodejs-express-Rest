@@ -22,7 +22,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "test:artillery": "artillery run -o report.json src/test_scenario.yaml",
     "artillery report": "artillery report --output report.html report.json",
-    "typeorm-generate": "typeorm migration:generate -n db -f ./dist/app.module"
+    "typeorm-generate": "typeorm migration:generate -n db -f ./dist/ormconfig-migrations"
   },
   "dependencies": {
     "@nestjs/common": "^7.6.15",
