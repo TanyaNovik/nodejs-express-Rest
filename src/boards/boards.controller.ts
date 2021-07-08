@@ -8,7 +8,8 @@ import {
   Put,
   HttpException,
   HttpStatus,
-  UseGuards, UseFilters
+  UseGuards,
+  UseFilters,
 } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';

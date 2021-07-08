@@ -6,9 +6,9 @@ import {
 import { AppModule } from './app.module';
 import 'dotenv/config';
 import { Logger } from '@nestjs/common';
-// import path from 'path';
-// import { load } from 'yamljs';
-// import { SwaggerModule } from '@nestjs/swagger';
+import { load } from 'yamljs';
+import { SwaggerModule } from '@nestjs/swagger';
+import { join } from 'path';
 
 async function bootstrap() {
   const app =
@@ -26,9 +26,8 @@ async function bootstrap() {
       'Main.ts',
     );
   });
-  // const document = SwaggerModule.createDocument(app, swaggerDocument);
-  // SwaggerModule.setup('/doc', app, document);
+  const swaggerDocument = load(join(__dirname, '../doc/api.yaml'));
+  SwaggerModule.setup('/doc', app, swaggerDocument);
 }
-// const swaggerDocument = load(path.join(__dirname, '../doc/api.yaml'));
 
 bootstrap();
