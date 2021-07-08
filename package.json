@@ -20,7 +20,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "test:artillery": "artillery run src/test_scenario.yaml",
+    "test:artillery": "artillery run -o report.json src/test_scenario.yaml",
+    "artillery report": "artillery report --output report.html report.json",
     "typeorm-generate": "typeorm migration:generate -n db -f ./dist/app.module"
   },
   "dependencies": {
@@ -32,9 +33,11 @@
     "@nestjs/passport": "^7.1.6",
     "@nestjs/platform-express": "^7.6.15",
     "@nestjs/platform-fastify": "^7.6.18",
+    "@nestjs/swagger": "^4.8.2",
     "@nestjs/typeorm": "^7.1.5",
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
+    "fastify-swagger": "^4.8.2",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.2.5",
     "passport": "^0.4.1",
@@ -44,7 +47,9 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.6",
-    "typeorm": "^0.2.34"
+    "swagger-ui-express": "^4.1.6",
+    "typeorm": "^0.2.34",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.6.0",

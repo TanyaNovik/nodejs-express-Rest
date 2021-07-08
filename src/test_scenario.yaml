@@ -1,8 +1,8 @@
 config:
   target: 'http://localhost:4000'
   phases:
-    - duration: 5
-      arrivalRate: 1
+    - duration: 25
+      arrivalRate: 10
 before:
   flow:
     - post:
@@ -31,26 +31,17 @@ scenarios:
          headers:
            authorization: "Bearer {{ token }}"
       - get:
-         url: "/boards"
+         url: "/users"
          headers:
            authorization: "Bearer {{ token }}"
-      - post:
-         url: "/boards"
-         headers:
-           authorization: "Bearer {{ token }}"
-         json:
-           title: "projectX"
-           columns: "[]"
-         capture:
-           - json: $.id
-             as: boardId
       - put:
-         url: "/boards/{{boardId}}"
+         url: "/users/{{userId}}"
          headers:
            authorization: "Bearer {{ token }}"
          json:
-           title: "projectY"
-           columns: "[]"
+           login: "TanyaX"
+           name: "TanyaX"
+           password: "password"
       - delete:
          url: '/users/{{userId}}'
          headers:

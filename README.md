@@ -1,3 +1,19 @@
+Express
+Requests	    [total, throughput]	                1250, 49.19
+Duration	    [min, mean, 95, 99, max]	        112.6µs, 153.9µs, 224.5µs, 274.4µs, 294.2µs
+Latencies     	[min, mean, 95, 99, max]	        5msec, 11msec, 114msec, 148msec, 200msec,
+Success	        [ratio]	                            100.00%
+Status Codes	[code:count]                     	200:1000 201:250
+
+Fastify
+Requests	    [total, throughput]	                1250, 49.17
+Duration	    [min, mean, 95, 99, max]	        155.7µs, 242µs, 2276.4µs, 2798.4µs, 2942.3µs
+Latencies     	[min, mean, 95, 99, max]	        6msec, 13msec, 344msec, 841msec, 1537msec,
+Success	        [ratio]	                            100.00%
+Status Codes	[code:count]                     	200:1000 201:250
+
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
@@ -71,3 +87,5 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+
